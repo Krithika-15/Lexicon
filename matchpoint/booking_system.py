@@ -21,7 +21,11 @@ class BookingSystem:
         self.resources.append(Court("P2", "Padel Court 2", 400, "padel"))
         self.resources.append(GroupClass("Y1", "Yoga - Morning", 120, "Monday", 7, 12))
         self.resources.append(GroupClass("Y2", "Yoga - Evening", 120, "Monday", 18, 12))
-        self.resources.append(GroupClass("Y3", "Yoga - Weekend", 120, "Saturday", 10, 12))
+        self.resources.append(GroupClass("Y3", "Yoga - Evening", 120, "Tuesday", 18, 12))
+        self.resources.append(GroupClass("Y4", "Yoga - Morning", 120, "Wednesday", 7, 12))
+        self.resources.append(GroupClass("Y5", "Yoga - Evening", 120, "Thursday", 18, 12))
+        self.resources.append(GroupClass("Y6", "Yoga - Morning", 120, "Friday", 7, 12))
+        self.resources.append(GroupClass("Y7", "Yoga - Weekend", 120, "Saturday", 10, 12))
 
     def register_customer(self, name: str, email: str) -> Customer:
         customer = Customer(f"C{self.next_customer_number}", name, email)
