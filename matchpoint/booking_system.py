@@ -22,3 +22,9 @@ class BookingSystem:
         self.resources.append(GroupClass("Y1", "Yoga - Morning", 120, "Monday", 7, 12))
         self.resources.append(GroupClass("Y2", "Yoga - Evening", 120, "Monday", 18, 12))
         self.resources.append(GroupClass("Y3", "Yoga - Weekend", 120, "Saturday", 10, 12))
+
+    def register_customer(self, name: str, email: str) -> Customer:
+        customer = Customer(f"C{self.next_customer_number}", name, email)
+        self.customers.append(customer)
+        self.next_customer_number += 1
+        return customer
