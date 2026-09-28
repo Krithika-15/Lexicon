@@ -1,0 +1,24 @@
+from matchpoint.customer import Customer
+from matchpoint.resource import Court, GroupClass
+from matchpoint.booking import Booking
+
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+class BookingSystem:
+    """The centre's brain: keeps all customers, resources and bookings, and checks the booking rules."""
+
+    def __init__(self) -> None:
+        self.customers = []
+        self.resources = []
+        self.bookings = []
+        self.next_customer_number = 1
+        self.next_booking_number = 1
+
+        self.resources.append(Court("T1", "Tennis Court 1", 250, "tennis"))
+        self.resources.append(Court("T2", "Tennis Court 2", 250, "tennis"))
+        self.resources.append(Court("P1", "Padel Court 1", 400, "padel"))
+        self.resources.append(Court("P2", "Padel Court 2", 400, "padel"))
+        self.resources.append(GroupClass("Y1", "Yoga - Morning", 120, "Monday", 7, 12))
+        self.resources.append(GroupClass("Y2", "Yoga - Evening", 120, "Monday", 18, 12))
+        self.resources.append(GroupClass("Y3", "Yoga - Weekend", 120, "Saturday", 10, 12))
