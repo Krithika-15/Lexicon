@@ -43,4 +43,9 @@ class BookingSystem:
                 return existing_customer
         raise ValueError("No customer with that email")
 
+    def book_court(self, customer: Customer, court: Court, day: str, hour: int) -> Booking:
+        booking = Booking(f"B{self.next_booking_number}", customer, court, day, hour)
+        self.bookings.append(booking)
+        self.next_booking_number += 1
+        return booking
 
