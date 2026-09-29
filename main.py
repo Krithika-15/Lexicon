@@ -1,7 +1,7 @@
 from matchpoint.customer import Customer
 from matchpoint.resource import Court, GroupClass
 from matchpoint.booking import Booking
-from matchpoint.booking_system import BookingSystem
+from matchpoint.booking_system import BookingSystem, DAYS
 
 
 system = BookingSystem()
@@ -49,9 +49,16 @@ while True:
                 if court_num < 1 or court_num > len(courts):
                     raise ValueError("Please choose a court between 1 and 4")
                 court = courts[court_num-1]
-                print(f"You chose {court_num} : {court.resource_id}: {court.name} ({court.price} kr)")
+                for day_no, day in enumerate(DAYS, start=1):
+                    print(f"{day_no}. {day}")
+                day_num = int(input("Choose a day number : "))
+                if day_num < 1 or day_num > len(DAYS):
+                    raise ValueError("Please choose a number between 1 and 7")
+                day = DAYS[day_num-1]
+                print(f"You chose {court.name} on {day}")
             except ValueError as e:
                 print(f"Error : {e}")
+
     elif user_input == "5":
         print("Good Bye")
         break
