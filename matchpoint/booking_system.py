@@ -44,6 +44,8 @@ class BookingSystem:
         raise ValueError("No customer with that email")
 
     def book_court(self, customer: Customer, court: Court, day: str, hour: int) -> Booking:
+        if hour < 7 or hour > 21:
+            raise ValueError("We're open 07:00-22:00, so start times are 7 to 21")
         for existing_booking in self.bookings:
             if existing_booking.resource == court and existing_booking.day == day and existing_booking.start_hour == hour:
                 raise ValueError("That court is already booked at that time")
