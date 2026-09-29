@@ -63,3 +63,8 @@ class BookingSystem:
                 courts.append(resource)
         return courts
 
+    def join_class(self, customer: Customer, group_class: GroupClass) -> Booking:
+        booking = Booking(f"B{self.next_booking_number}", customer, group_class, group_class.day, group_class.start_hour)
+        self.bookings.append(booking)
+        self.next_booking_number += 1
+        return booking
