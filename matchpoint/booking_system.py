@@ -71,3 +71,10 @@ class BookingSystem:
         self.bookings.append(booking)
         self.next_booking_number += 1
         return booking
+
+    def spots_left(self, group_class: GroupClass) -> int:
+        count = 0
+        for existing_booking in self.bookings:
+            if existing_booking.resource == group_class:
+                count += 1
+        return group_class.capacity - count
