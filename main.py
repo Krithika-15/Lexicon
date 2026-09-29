@@ -41,7 +41,9 @@ while True:
         if current_customer is None:
             print("Please log in first")
         else:
-            print(f"Booking for {current_customer.name}")
+            courts = system.get_courts()
+            for number, court in enumerate(courts, start=1):
+                print(f"{number}. {court}")
     elif user_input == "5":
         print("Good Bye")
         break
