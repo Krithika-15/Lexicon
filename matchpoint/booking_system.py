@@ -56,3 +56,10 @@ class BookingSystem:
         self.next_booking_number += 1
         return booking
 
+    def get_courts(self) -> list[Court]:
+        courts = []
+        for resource in self.resources:
+            if isinstance(resource, Court):
+                courts.append(resource)
+        return courts
+
