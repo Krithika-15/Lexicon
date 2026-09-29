@@ -64,6 +64,9 @@ class BookingSystem:
         return courts
 
     def join_class(self, customer: Customer, group_class: GroupClass) -> Booking:
+        for existing_booking in self.bookings:
+            if existing_booking.customer == customer and existing_booking.resource == group_class:
+                raise ValueError("You have already joined the class")
         booking = Booking(f"B{self.next_booking_number}", customer, group_class, group_class.day, group_class.start_hour)
         self.bookings.append(booking)
         self.next_booking_number += 1
