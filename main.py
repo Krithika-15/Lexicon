@@ -55,7 +55,9 @@ while True:
                 if day_num < 1 or day_num > len(DAYS):
                     raise ValueError("Please choose a number between 1 and 7")
                 day = DAYS[day_num-1]
-                print(f"You chose {court.name} on {day}")
+                starting_hour = int(input("Enter the start hour (7-21) : "))
+                new_booking = system.book_court(current_customer, court, day, starting_hour)
+                print(f"Booked! {new_booking}")
             except ValueError as e:
                 print(f"Error : {e}")
 
