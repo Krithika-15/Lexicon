@@ -67,6 +67,8 @@ class BookingSystem:
         for existing_booking in self.bookings:
             if existing_booking.customer == customer and existing_booking.resource == group_class:
                 raise ValueError("You have already joined the class")
+        if self.spots_left(group_class) == 0:
+            raise ValueError("Sorry! This class is full")
         booking = Booking(f"B{self.next_booking_number}", customer, group_class, group_class.day, group_class.start_hour)
         self.bookings.append(booking)
         self.next_booking_number += 1
