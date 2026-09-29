@@ -44,6 +44,9 @@ class BookingSystem:
         raise ValueError("No customer with that email")
 
     def book_court(self, customer: Customer, court: Court, day: str, hour: int) -> Booking:
+        for existing_booking in self.bookings:
+            if existing_booking.resource == court and existing_booking.day == day and existing_booking.start_hour == hour:
+                raise ValueError("That court is already booked at that time")
         booking = Booking(f"B{self.next_booking_number}", customer, court, day, hour)
         self.bookings.append(booking)
         self.next_booking_number += 1
