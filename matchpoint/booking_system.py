@@ -29,6 +29,18 @@ class BookingSystem:
 
     def register_customer(self, name: str, email: str) -> Customer:
         customer = Customer(f"C{self.next_customer_number}", name, email)
+        for existing_customer in self.customers:
+            if existing_customer.email == customer.email:
+                raise ValueError("Email already registered")
         self.customers.append(customer)
         self.next_customer_number += 1
         return customer
+
+    def log_in(self, email: str) -> Customer:
+        email = email.strip().lower()
+        for existing_customer in self.customers:
+            if existing_customer.email == email:
+                return existing_customer
+        raise ValueError("No customer with that email")
+
+

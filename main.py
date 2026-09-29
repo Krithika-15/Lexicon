@@ -18,7 +18,13 @@ while True:
     print(menu)
     user_input = input("Choose : ")
     if user_input == "1":
-        print("Chose option 1")
+        name = input("Enter your name : ")
+        email = input("Enter your email : ")
+        try:
+            customer = system.register_customer(name, email)
+            print(f"Welcome, {customer.name}! Your ID is {customer.customer_id}")
+        except ValueError as e:
+            print(f"Error : {e}")
     elif user_input == "2":
         for resource in system.resources:
             print(resource)
