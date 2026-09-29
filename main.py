@@ -38,8 +38,11 @@ while True:
         for resource in system.resources:
             print(resource)
     elif user_input == "4":
-        print("Chose option 4")
-    elif user_input == "5" :
+        if current_customer is None:
+            print("Please log in first")
+        else:
+            print(f"Booking for {current_customer.name}")
+    elif user_input == "5":
         print("Good Bye")
         break
     else:
