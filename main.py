@@ -44,6 +44,14 @@ while True:
             courts = system.get_courts()
             for number, court in enumerate(courts, start=1):
                 print(f"{number}. {court}")
+            try:
+                court_num = int(input("Choose a court number : "))
+                if court_num < 1 or court_num > len(courts):
+                    raise ValueError("Please choose a court between 1 and 4")
+                court = courts[court_num-1]
+                print(f"You chose {court_num} : {court.resource_id}: {court.name} ({court.price} kr)")
+            except ValueError as e:
+                print(f"Error : {e}")
     elif user_input == "5":
         print("Good Bye")
         break
