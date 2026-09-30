@@ -16,7 +16,8 @@ while True:
 3. See courts and classes
 4. Book a court
 5. Join a yoga class
-6. Exit
+6. My Bookings
+7. Exit
 """
     print(menu)
     user_input = input("Choose : ")
@@ -80,6 +81,17 @@ while True:
                 print(f"Error : {e}")
 
     elif user_input == "6":
+        if current_customer is None:
+            print("Please log in first")
+        else:
+            my_bookings = system.get_bookings_for(current_customer)
+            if len(my_bookings) == 0:
+                print("You have no bookings yet")
+            else:
+                for booking in my_bookings:
+                    print(booking)
+
+    elif user_input == "7":
         print("Good Bye")
         break
     else:
