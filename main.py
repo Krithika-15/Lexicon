@@ -18,7 +18,8 @@ while True:
 5. Join a yoga class
 6. My Bookings
 7. Cancel Booking
-8. Exit
+8. Log out
+9. Exit
 """
     print(menu)
     user_input = input("Choose : ")
@@ -113,6 +114,13 @@ while True:
                     print(f"Error : {e}")
 
     elif user_input == "8":
+        if current_customer is None:
+            print("Please log in first")
+        else:
+            print(f"Goodbye, {current_customer.name}! You are logged out")
+            current_customer = None
+
+    elif user_input == "9":
         print("Good Bye")
         break
     else:
