@@ -17,7 +17,8 @@ while True:
 4. Book a court
 5. Join a yoga class
 6. My Bookings
-7. Exit
+7. Cancel Booking
+8. Exit
 """
     print(menu)
     user_input = input("Choose : ")
@@ -92,6 +93,26 @@ while True:
                     print(booking)
 
     elif user_input == "7":
+        if current_customer is None:
+            print("Please log in first")
+        else:
+            my_bookings = system.get_bookings_for(current_customer)
+            if len(my_bookings) == 0:
+                print("You have no bookings to cancel")
+            else:
+                for number, booking in enumerate(my_bookings, start=1):
+                    print(f"{number}. {booking}")
+                try:
+                    booking_num = int(input("Choose a booking number to cancel : "))
+                    if booking_num < 1 or booking_num > len(my_bookings):
+                        raise ValueError(f"Please choose a valid booking number between 1 and {len(my_bookings)}")
+                    booking = my_bookings[booking_num-1]
+                    cancelled = system.cancel_booking(current_customer, booking.booking_id)
+                    print(f"Cancelled: {cancelled}")
+                except ValueError as e:
+                    print(f"Error : {e}")
+
+    elif user_input == "8":
         print("Good Bye")
         break
     else:
