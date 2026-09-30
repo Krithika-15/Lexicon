@@ -14,8 +14,9 @@ while True:
 1. Register
 2. Login
 3. See courts and classes
-4. Book a court or class
-5. Exit
+4. Book a court
+5. Join a yoga class
+6. Exit
 """
     print(menu)
     user_input = input("Choose : ")
@@ -62,6 +63,23 @@ while True:
                 print(f"Error : {e}")
 
     elif user_input == "5":
+        if current_customer is None:
+            print("Please log in first")
+        else:
+            yoga_classes = system.get_classes()
+            for number, yoga_class in enumerate(yoga_classes, start=1):
+                print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} left")
+            try:
+                yoga_class_num = int(input("Choose a yoga class number : "))
+                if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):
+                    raise ValueError("Please choose a class number between 1 and 7")
+                yoga_class = yoga_classes[yoga_class_num-1]
+                new_booking = system.join_class(current_customer, yoga_class)
+                print(f"Joined! {new_booking}")
+            except ValueError as e:
+                print(f"Error : {e}")
+
+    elif user_input == "6":
         print("Good Bye")
         break
     else:
