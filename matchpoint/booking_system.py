@@ -63,6 +63,13 @@ class BookingSystem:
                 courts.append(resource)
         return courts
 
+    def get_classes(self) -> list[GroupClass]:
+        classes = []
+        for resource in self.resources:
+            if isinstance(resource, GroupClass):
+                classes.append(resource)
+        return classes
+
     def join_class(self, customer: Customer, group_class: GroupClass) -> Booking:
         for existing_booking in self.bookings:
             if existing_booking.customer == customer and existing_booking.resource == group_class:
