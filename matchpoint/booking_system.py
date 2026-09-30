@@ -87,3 +87,10 @@ class BookingSystem:
             if existing_booking.resource == group_class:
                 count += 1
         return group_class.capacity - count
+
+    def get_bookings_for(self, customer: Customer) -> list[Booking]:
+        customer_bookings = []
+        for booking in self.bookings:
+            if booking.customer == customer:
+                customer_bookings.append(booking)
+        return customer_bookings
