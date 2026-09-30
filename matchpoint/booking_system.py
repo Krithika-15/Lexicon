@@ -94,3 +94,10 @@ class BookingSystem:
             if booking.customer == customer:
                 customer_bookings.append(booking)
         return customer_bookings
+
+    def cancel_booking(self, customer: Customer, booking_id: str) -> Booking:
+        for existing_booking in self.bookings:
+            if existing_booking.customer == customer and existing_booking.booking_id == booking_id:
+                self.bookings.remove(existing_booking)
+                return existing_booking
+        raise ValueError("No booking with that id for you")
