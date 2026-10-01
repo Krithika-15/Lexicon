@@ -51,13 +51,13 @@ while True:
             try:
                 court_num = int(input("Choose a court number : "))
                 if court_num < 1 or court_num > len(courts):
-                    raise ValueError("Please choose a court between 1 and 4")
+                    raise ValueError(f"Please choose a court between 1 and {len(courts)}")
                 court = courts[court_num-1]
                 for day_no, day in enumerate(DAYS, start=1):
                     print(f"{day_no}. {day}")
                 day_num = int(input("Choose a day number : "))
                 if day_num < 1 or day_num > len(DAYS):
-                    raise ValueError("Please choose a number between 1 and 7")
+                    raise ValueError(f"Please choose a number between 1 and {len(DAYS)}")
                 day = DAYS[day_num-1]
                 starting_hour = int(input("Enter the start hour (7-21) : "))
                 new_booking = system.book_court(current_customer, court, day, starting_hour)
@@ -75,7 +75,7 @@ while True:
             try:
                 yoga_class_num = int(input("Choose a yoga class number : "))
                 if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):
-                    raise ValueError("Please choose a class number between 1 and 7")
+                    raise ValueError(f"Please choose a class number between 1 and {len(yoga_classes)}")
                 yoga_class = yoga_classes[yoga_class_num-1]
                 new_booking = system.join_class(current_customer, yoga_class)
                 print(f"Joined! {new_booking}")
