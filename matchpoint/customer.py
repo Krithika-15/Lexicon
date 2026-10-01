@@ -4,6 +4,8 @@ class Customer:
     def __init__(self, customer_id: str, name: str, email: str) -> None:
         if not name.strip():
             raise ValueError("Name can't be empty")
+        if not any(ch.isalpha() for ch in name):
+            raise ValueError("Name must contain at least one character")
         if "@" not in email or "." not in email:
             raise ValueError("Invalid email address")
         self.customer_id = customer_id
