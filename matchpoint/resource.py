@@ -32,4 +32,4 @@ class GroupClass(Resource):
         self.capacity = capacity
 
     def __str__(self) -> str:
-        return f"{self.resource_id}: {self.name} ({self.day} {self.start_hour:02}:00, {self.capacity} spots, {self.price} kr)"
+        return f"{self.resource_id}: {self.name} ({self.day} {self.start_hour:02}:00, max {self.capacity} people, {self.price} kr)"

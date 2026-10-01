@@ -74,7 +74,7 @@ while True:
         else:
             yoga_classes = system.get_classes()
             for number, yoga_class in enumerate(yoga_classes, start=1):
-                print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} left")
+                print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} spots left")
             try:
                 yoga_class_num = ask_number("Choose a yoga class number : ")
                 if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):

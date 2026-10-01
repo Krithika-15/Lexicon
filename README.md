@@ -32,6 +32,7 @@ You need Python 3.10 or newer. From the project folder, run:
 
 ## Project structure
 
+- `main.py` - the menu. It only asks for input and prints results.
 - `matchpoint/customer.py` - the Customer class (id, name, email). It also checks that the name and email are valid.
 - `matchpoint/resource.py` - courts and yoga classes. Both are a Resource; Court and GroupClass add their own details.
 - `matchpoint/booking.py` - the Booking class. It links a customer, a resource, a day and an hour.
