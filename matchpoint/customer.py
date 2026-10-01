@@ -7,7 +7,7 @@ class Customer:
         if "@" not in email or "." not in email:
             raise ValueError("Invalid email address")
         self.customer_id = customer_id
-        self.name = name.strip()
+        self.name = name.strip().title()
         self.email = email.strip().lower()
 
     def __str__(self) -> str:
