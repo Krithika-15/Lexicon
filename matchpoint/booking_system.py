@@ -51,6 +51,8 @@ class BookingSystem:
         for existing_booking in self.bookings:
             if existing_booking.resource == court and existing_booking.day == day and existing_booking.start_hour == hour:
                 raise ValueError("That court is already booked at that time")
+        if self.has_booking_at(customer, day, hour):
+            raise ValueError("You already have a booking at that time")
         booking = Booking(f"B{self.next_booking_number}", customer, court, day, hour)
         self.bookings.append(booking)
         self.next_booking_number += 1
@@ -74,6 +76,8 @@ class BookingSystem:
         for existing_booking in self.bookings:
             if existing_booking.customer == customer and existing_booking.resource == group_class:
                 raise ValueError("You have already joined the class")
+        if self.has_booking_at(customer, group_class.day, group_class.start_hour):
+            raise ValueError("You already have a booking at that time")
         if self.spots_left(group_class) == 0:
             raise ValueError("Sorry! This class is full")
         booking = Booking(f"B{self.next_booking_number}", customer, group_class, group_class.day, group_class.start_hour)
@@ -94,6 +98,12 @@ class BookingSystem:
             if booking.customer == customer:
                 customer_bookings.append(booking)
         return customer_bookings
+
+    def has_booking_at(self, customer: Customer, day: str, hour: int) -> bool:
+        for existing_booking in self.bookings:
+            if existing_booking.customer == customer and existing_booking.day == day and existing_booking.start_hour == hour:
+                return True
+        return False
 
     def cancel_booking(self, customer: Customer, booking_id: str) -> Booking:
         for existing_booking in self.bookings:
