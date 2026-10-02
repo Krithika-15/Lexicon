@@ -54,23 +54,23 @@ while True:
                 for number, court in enumerate(courts, start=1):
                     print(f"{number}. {court}")
                 try:
-                    court_num = ask_number("Choose a court number : ")
+                    court_num = ask_number("\nChoose a court number : ")
                     if court_num < 1 or court_num > len(courts):
-                        raise ValueError(f"Please choose a court between 1 and {len(courts)}")
+                        raise ValueError(f"\nPlease choose a court between 1 and {len(courts)}")
                     court = courts[court_num-1]
                     for day_no, day in enumerate(DAYS, start=1):
                         print(f"{day_no}. {day}")
-                    day_num = ask_number("Choose a day number : ")
+                    day_num = ask_number("\nChoose a day number : ")
                     if day_num < 1 or day_num > len(DAYS):
-                        raise ValueError(f"Please choose a number between 1 and {len(DAYS)}")
+                        raise ValueError(f"\nPlease choose a number between 1 and {len(DAYS)}")
                     day = DAYS[day_num-1]
-                    starting_hour = ask_number("Enter the start hour (7-21) : ")
+                    starting_hour = ask_number("\nEnter the start hour (7-21) : ")
                     new_booking = system.book_court(current_customer, court, day, starting_hour)
                     print(f"Booked! {new_booking}")
                     break
                 except ValueError as e:
                     print(f"Error : {e}")
-                    try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                    try_again = input("\nTry again? (y = try again, anything else = back to menu) : ").strip().lower()
                     if try_again != "y":
                         break
 
@@ -83,16 +83,16 @@ while True:
                 for number, yoga_class in enumerate(yoga_classes, start=1):
                     print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} spots left")
                 try:
-                    yoga_class_num = ask_number("Choose a yoga class number : ")
+                    yoga_class_num = ask_number("\nChoose a yoga class number : ")
                     if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):
-                        raise ValueError(f"Please choose a class number between 1 and {len(yoga_classes)}")
+                        raise ValueError(f"\nPlease choose a class number between 1 and {len(yoga_classes)}")
                     yoga_class = yoga_classes[yoga_class_num-1]
                     new_booking = system.join_class(current_customer, yoga_class)
                     print(f"Joined! {new_booking}")
                     break
                 except ValueError as e:
                     print(f"Error : {e}")
-                    try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                    try_again = input("\nTry again? (y = try again, anything else = back to menu) : ").strip().lower()
                     if try_again != "y":
                         break
 
@@ -119,16 +119,16 @@ while True:
                     for number, booking in enumerate(my_bookings, start=1):
                         print(f"{number}. {booking}")
                     try:
-                        booking_num = ask_number("Choose a booking number to cancel : ")
+                        booking_num = ask_number("\nChoose a booking number to cancel : ")
                         if booking_num < 1 or booking_num > len(my_bookings):
-                            raise ValueError(f"Please choose a valid booking number between 1 and {len(my_bookings)}")
+                            raise ValueError(f"\nPlease choose a valid booking number between 1 and {len(my_bookings)}")
                         booking = my_bookings[booking_num-1]
                         cancelled = system.cancel_booking(current_customer, booking.booking_id)
                         print(f"Cancelled: {cancelled}")
                         break
                     except ValueError as e:
                         print(f"Error : {e}")
-                        try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                        try_again = input("\nTry again? (y = try again, anything else = back to menu) : ").strip().lower()
                         if try_again != "y":
                             break
 
