@@ -15,10 +15,11 @@ You need Python 3.10 or newer. From the project folder, run:
 3. See all courts and yoga classes with prices
 4. Book a court (choose a court, day and a start hour)
 5. Join a yoga class (shows how many spots are left)
-6. See my Bookings
-7. Cancel one of my bookings
-8. Log out
-9. Exit
+6. After a wrong choice in booking a court or joining a yoga class you can try again instead of going back to the menu.
+7. See my Bookings
+8. Cancel one of my bookings
+9. Log out
+10. Exit
 
 ## Booking rules
 

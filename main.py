@@ -12,6 +12,7 @@ current_customer = None
 
 
 while True:
+    print()
     menu = """
 === Match Point Sports Centre ===
 1. Register
@@ -48,42 +49,52 @@ while True:
         if current_customer is None:
             print("Please log in first")
         else:
-            courts = system.get_courts()
-            for number, court in enumerate(courts, start=1):
-                print(f"{number}. {court}")
-            try:
-                court_num = ask_number("Choose a court number : ")
-                if court_num < 1 or court_num > len(courts):
-                    raise ValueError(f"Please choose a court between 1 and {len(courts)}")
-                court = courts[court_num-1]
-                for day_no, day in enumerate(DAYS, start=1):
-                    print(f"{day_no}. {day}")
-                day_num = ask_number("Choose a day number : ")
-                if day_num < 1 or day_num > len(DAYS):
-                    raise ValueError(f"Please choose a number between 1 and {len(DAYS)}")
-                day = DAYS[day_num-1]
-                starting_hour = ask_number("Enter the start hour (7-21) : ")
-                new_booking = system.book_court(current_customer, court, day, starting_hour)
-                print(f"Booked! {new_booking}")
-            except ValueError as e:
-                print(f"Error : {e}")
+            while True:
+                courts = system.get_courts()
+                for number, court in enumerate(courts, start=1):
+                    print(f"{number}. {court}")
+                try:
+                    court_num = ask_number("Choose a court number : ")
+                    if court_num < 1 or court_num > len(courts):
+                        raise ValueError(f"Please choose a court between 1 and {len(courts)}")
+                    court = courts[court_num-1]
+                    for day_no, day in enumerate(DAYS, start=1):
+                        print(f"{day_no}. {day}")
+                    day_num = ask_number("Choose a day number : ")
+                    if day_num < 1 or day_num > len(DAYS):
+                        raise ValueError(f"Please choose a number between 1 and {len(DAYS)}")
+                    day = DAYS[day_num-1]
+                    starting_hour = ask_number("Enter the start hour (7-21) : ")
+                    new_booking = system.book_court(current_customer, court, day, starting_hour)
+                    print(f"Booked! {new_booking}")
+                    break
+                except ValueError as e:
+                    print(f"Error : {e}")
+                    try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                    if try_again != "y":
+                        break
 
     elif user_input == "5":
         if current_customer is None:
             print("Please log in first")
         else:
-            yoga_classes = system.get_classes()
-            for number, yoga_class in enumerate(yoga_classes, start=1):
-                print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} spots left")
-            try:
-                yoga_class_num = ask_number("Choose a yoga class number : ")
-                if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):
-                    raise ValueError(f"Please choose a class number between 1 and {len(yoga_classes)}")
-                yoga_class = yoga_classes[yoga_class_num-1]
-                new_booking = system.join_class(current_customer, yoga_class)
-                print(f"Joined! {new_booking}")
-            except ValueError as e:
-                print(f"Error : {e}")
+            while True:
+                yoga_classes = system.get_classes()
+                for number, yoga_class in enumerate(yoga_classes, start=1):
+                    print(f"{number}. {yoga_class} - {system.spots_left(yoga_class)} spots left")
+                try:
+                    yoga_class_num = ask_number("Choose a yoga class number : ")
+                    if yoga_class_num < 1 or yoga_class_num > len(yoga_classes):
+                        raise ValueError(f"Please choose a class number between 1 and {len(yoga_classes)}")
+                    yoga_class = yoga_classes[yoga_class_num-1]
+                    new_booking = system.join_class(current_customer, yoga_class)
+                    print(f"Joined! {new_booking}")
+                    break
+                except ValueError as e:
+                    print(f"Error : {e}")
+                    try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                    if try_again != "y":
+                        break
 
     elif user_input == "6":
         if current_customer is None:
@@ -104,17 +115,22 @@ while True:
             if len(my_bookings) == 0:
                 print("You have no bookings to cancel")
             else:
-                for number, booking in enumerate(my_bookings, start=1):
-                    print(f"{number}. {booking}")
-                try:
-                    booking_num = ask_number("Choose a booking number to cancel : ")
-                    if booking_num < 1 or booking_num > len(my_bookings):
-                        raise ValueError(f"Please choose a valid booking number between 1 and {len(my_bookings)}")
-                    booking = my_bookings[booking_num-1]
-                    cancelled = system.cancel_booking(current_customer, booking.booking_id)
-                    print(f"Cancelled: {cancelled}")
-                except ValueError as e:
-                    print(f"Error : {e}")
+                while True:
+                    for number, booking in enumerate(my_bookings, start=1):
+                        print(f"{number}. {booking}")
+                    try:
+                        booking_num = ask_number("Choose a booking number to cancel : ")
+                        if booking_num < 1 or booking_num > len(my_bookings):
+                            raise ValueError(f"Please choose a valid booking number between 1 and {len(my_bookings)}")
+                        booking = my_bookings[booking_num-1]
+                        cancelled = system.cancel_booking(current_customer, booking.booking_id)
+                        print(f"Cancelled: {cancelled}")
+                        break
+                    except ValueError as e:
+                        print(f"Error : {e}")
+                        try_again = input("Try again? (y = try again, anything else = back to menu) : ").strip().lower()
+                        if try_again != "y":
+                            break
 
     elif user_input == "8":
         if current_customer is None:
