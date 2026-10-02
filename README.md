@@ -4,7 +4,7 @@ A small command-line booking system for a sports centre with tennis courts, pade
 
 ## How to run
 
-You need Python 3.10 or newer. From the project folder, run:
+You need Python 3.9 or newer. From the project folder, run:
 
     python main.py
 
