@@ -43,8 +43,8 @@ SELECT * FROM products WHERE (category = 'Clothing' OR category = 'Shoes') AND p
 -- B2. For every product in stock, show name, price, stock and the total value
 --     of the stock (price x stock) as stock_value. Highest value first. (10 rows)
 SELECT name, price, stock, price * stock AS stock_value
-FROM products 
-WHERE stock > 0 
+FROM products
+WHERE stock > 0
 ORDER BY stock_value DESC;
 
 -- B3. Which customers have a first name with exactly 4 letters?
