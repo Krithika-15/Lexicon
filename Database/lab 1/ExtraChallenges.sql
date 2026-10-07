@@ -62,7 +62,7 @@ FROM products;
 -- Look up: COALESCE
 -- Expected: 10 rows
 SELECT first_name,
-	   coalesce(city, 'Unknown') city
+	   coalesce(city, 'Unknown') AS city
 	FROM customers;
 
 
@@ -96,7 +96,7 @@ SELECT email, substr(email, 1, (instr(email, '@')-1)) AS username FROM customers
 -- Don't type the average yourself: let SQL calculate it inside the query.
 -- Expected: 5 rows
 -- used subquery (inner one runs first and becomes a single value, then the outer one uses it)
-SELECT * FROM products WHERE price > (SELECT AVG(price) as average FROM products);
+SELECT * FROM products WHERE price > (SELECT AVG(price) FROM products);
 
 -- Exercise 12
 -- Make a price list with one column that says, for example, "Socks 3-pack costs 129 kr".
@@ -114,4 +114,4 @@ SELECT
 -- How many customers live in each city? Biggest city first.
 -- Look up: GROUP BY
 -- Expected: 6 rows
-SELECT city, COUNT(*) AS no_of_customers from customers GROUP BY city;
+SELECT city, COUNT(*) AS no_of_customers from customers GROUP BY city ORDER BY no_of_customers DESC;
