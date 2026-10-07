@@ -48,35 +48,45 @@ SELECT first_name || ' ' ||last_name AS full_name FROM customers ORDER BY last_n
 -- premium from 800 kr.
 -- Look up: CASE WHEN
 -- Expected: 12 rows: 4 budget, 5 mid, 3 premium
-
+SELECT name, price,
+	CASE
+		WHEN price < 200 THEN 'budget'
+		WHEN price BETWEEN 200 AND 799 THEN 'mid'
+		ELSE 'premium'
+	END AS price_level
+FROM products;
 
 
 -- Exercise 7
 -- Show every customer's first name and city, but write Unknown instead of NULL.
 -- Look up: COALESCE
 -- Expected: 10 rows
-
+SELECT first_name,
+	   coalesce(city, 'Unknown') city
+	FROM customers;
 
 
 -- Exercise 8
 -- Which customers joined in the first half of a year (January to June), whatever the year?
 -- Look up: strftime
 -- Expected: 6 rows
-
+SELECT * FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06';
+-- Alternative: CAST the month from text to INTEGER, then compare as numbers
+SELECT * FROM customers WHERE CAST(strftime('%m', joined_date) AS INTEGER) BETWEEN 1 AND 6;
 
 
 -- Exercise 9
 -- Which product has the longest name?
 -- Look up: LENGTH
 -- Expected: 1 row
-
+SELECT name, length(name) AS name_length FROM products ORDER BY name_length DESC LIMIT 1;
 
 
 -- Exercise 10
 -- Show each customer's email username: the part before the @.
 -- Look up: substr and instr
 -- Expected: 10 rows
-
+SELECT email, substr(email, 1, (instr(email, '@')-1)) AS username FROM customers;
 
 
 -- ---------- Level 3 ----------
@@ -85,19 +95,23 @@ SELECT first_name || ' ' ||last_name AS full_name FROM customers ORDER BY last_n
 -- Which products cost more than the average price?
 -- Don't type the average yourself: let SQL calculate it inside the query.
 -- Expected: 5 rows
-
-
+-- used subquery (inner one runs first and becomes a single value, then the outer one uses it)
+SELECT * FROM products WHERE price > (SELECT AVG(price) as average FROM products);
 
 -- Exercise 12
 -- Make a price list with one column that says, for example, "Socks 3-pack costs 129 kr".
 -- Only products in stock, cheapest first.
 -- Watch out: does it say 129 or 129.0? Fix it.
 -- Expected: 10 rows
-
+SELECT 
+	name || ' costs ' || CAST(ROUND(price) AS INTEGER) || ' kr' as price_list
+	FROM products 
+	WHERE stock > 0 
+	ORDER BY price;
 
 
 -- Exercise 13
 -- How many customers live in each city? Biggest city first.
 -- Look up: GROUP BY
 -- Expected: 6 rows
-
+SELECT city, COUNT(*) AS no_of_customers from customers GROUP BY city;
