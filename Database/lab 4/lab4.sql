@@ -9,7 +9,7 @@ SELECT COUNT(*) FROM orders;
 -- Exercise 1
 -- Show every order with the customer's first name, last name and the order status.
 -- Expected: 15 rows
-SELECT 
+SELECT
 	customers.first_name, customers.last_name, orders.status
 FROM orders
 INNER JOIN customers
@@ -18,15 +18,14 @@ INNER JOIN customers
 -- Exercise 2
 -- Show all orders made by Erik.
 -- Expected: 3 rows
-SELECT 
+SELECT
 	customers.first_name, customers.last_name, orders.order_id, orders.status
 FROM orders
 INNER JOIN customers
 	ON orders.customer_id = customers.customer_id
 WHERE
 	LOWER(customers.first_name) = 'erik';
-
-
+	
 -- Exercise 3
 -- Show all orders from customers in Göteborg, newest first.
 -- Expected: 3 rows
@@ -48,7 +47,7 @@ SELECT
 FROM order_items
 INNER JOIN products
 	ON order_items.product_id = products.product_id;
-	
+
 -- Exercise 5
 -- Which orders contained Shoes? Show order_id and product name.
 -- Expected: 4 rows
@@ -64,13 +63,13 @@ WHERE
 -- Show the full receipt for order 10: product name, quantity, unit price and line total.
 -- Expected: 2 rows
 SELECT
-	order_items.order_id, 
-	products.name, 
-	order_items.quantity, 
-	order_items.unit_price, 
+	order_items.order_id,
+	products.name,
+	order_items.quantity,
+	order_items.unit_price,
 	order_items.quantity * order_items.unit_price AS line_total
-FROM products 
-INNER JOIN order_items 
+FROM products
+INNER JOIN order_items
 	ON products.product_id = order_items.product_id
 WHERE
 	order_items.order_id = 10;
@@ -80,8 +79,7 @@ WHERE
 -- Expected: 3 rows
 SELECT
 	customers.first_name,
-	orders.order_date,
-	products.name
+	orders.order_date
 FROM customers
 INNER JOIN orders
 	ON customers.customer_id = orders.customer_id
@@ -95,14 +93,45 @@ WHERE
 -- Exercise 8
 -- Show all customers and their orders, including customers with no orders.
 -- Expected: 17 rows
-
+SELECT
+	customers.customer_id,
+	customers.first_name,
+    customers.last_name,
+    orders.order_id,
+	orders.order_date,
+	orders.status
+FROM customers
+LEFT JOIN orders
+	ON customers.customer_id = orders.customer_id;
 
 -- Exercise 9
 -- Which products have never been sold?
 -- Expected: 2 rows
-
+SELECT
+	products.product_id,
+	products.name
+FROM products
+LEFT JOIN order_items
+	ON products.product_id = order_items.product_id
+WHERE
+	order_items.order_id IS NULL;
+	
 
 -- Exercise 10
 -- Challenge: show customers from Uppsala and every product they bought
 -- (first name, product name, quantity).
 -- Expected: 8 rows
+SELECT
+	customers.first_name,
+	products.name,
+	order_items.quantity
+FROM customers
+INNER JOIN orders
+	ON customers.customer_id = orders.customer_id
+INNER JOIN order_items
+	ON orders.order_id = order_items.order_id
+INNER JOIN products
+	ON products.product_id = order_items.product_id
+WHERE
+	LOWER(customers.city) = 'uppsala';
+
