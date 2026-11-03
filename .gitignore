@@ -4,3 +4,4 @@ __pycache__/
 *.db-journal
 .env
 weather.json
+API/lab 1/*.json
