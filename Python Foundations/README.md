@@ -1,99 +1,32 @@
-# Python Foundations - Lab Solutions
+# Python Foundations
 
-Ongoing collection of daily lab solutions from Lexicon's Python Foundations course, updated as new labs are assigned.
+My answers for the Python fundamentals part of the course. There is one folder per lab, and inside each lab one file per part of the worksheet (`Part_A.py`, `Part_B.py` and so on).
 
-## Structure
+| Lab | Topic |
+| --- | --- |
+| lab 1 | Python basics - variables, types, input, strings |
+| lab 2 | Lists, tuples, sets and dictionaries |
+| lab 3 | Conditions and loops |
+| lab 4 | Functions |
+| lab 5 | Scope, `*args` and `**kwargs` |
+| lab 6 | Comprehensions, `zip`, `sorted` and `lambda` |
+| lab 7 | Classes and objects |
+| lab 8 | Inheritance and `super()` |
+| lab 9 | Polymorphism, duck typing and composition |
 
-Each `lab N` folder contains one `Part_X.py` file per section of that lab's worksheet.
+Most labs end with an "applied challenge" (a small program like a study tracker or a report builder) and some stretch exercises.
 
-## Lab 1 - Python basics
+## Final project
 
-- **Part A** - Warm-up: Python basics (variables, types, type conversion)
-- **Part B** - User input and calculations
-- **Part C** - Strings
-- **Part D** - String investigation (indexing, slicing)
-- **Part E** - Applied challenge: Registration summary
-- **Part F** - Stretch challenges
+[Match Point Sports Centre](Match%20Point%20Sports%20Centre/) is a command line booking system for a sports centre. You can register, log in, book tennis or padel courts, join yoga classes and cancel your bookings. More about it in the project's own README.
 
-## Lab 2 - Collections in Python
+## How to run
 
-- **Part A** - Lists
-- **Part B** - Tuples and unpacking
-- **Part C** - Sets
-- **Part D** - Dictionaries
-- **Part E** - Nested collections
-- **Part F** - Applied challenge: Personal media catalogue
-- **Part G** - Stretch challenges
+No packages needed, just Python.
 
-## Lab 3 - Control flow
+    python "lab 1/Part_A.py"
 
-- **Part A** - Conditions
-- **Part B** - Truthy, falsy and membership
-- **Part C** - For loops
-- **Part D** - range, enumerate and nested loops
-- **Part E** - While loops
-- **Part F** - break and continue
-- **Part G** - Applied challenge: Console study tracker
-- **Part H** - Stretch challenges
+For the project:
 
-## Lab 4 - Functions
-
-- **Part A** - Function fundamentals
-- **Part B** - Return values
-- **Part C** - Defaults and keyword arguments
-- **Part D** - Functions and collections
-- **Part E** - Decomposition
-- **Part F** - Applied challenge: Event registration processor
-- **Part G** - Stretch challenges
-
-## Lab 5 - Scope and flexible arguments
-
-- **Part A** - Scope
-- **Part B** - *args
-- **Part C** - Positional unpacking
-- **Part D** - **kwargs
-- **Part E** - Combining parameters
-- **Part F** - Applied challenge: Report builder
-- **Part G** - Stretch challenges
-
-## Lab 6 - Pythonic Python
-
-- **Part A** - List comprehensions
-- **Part B** - Dictionary and set comprehensions
-- **Part C** - enumerate
-- **Part D** - zip and unpacking
-- **Part E** - sorted and lambda
-- **Part F** - Applied challenge: Data cleanup
-- **Part G** - Stretch challenges
-
-## Lab 7 - Classes and objects
-
-- **Part A** - Classes and objects
-- **Part B** - Methods and state
-- **Part C** - Instance and class attributes
-- **Part D** - Collections of objects
-- **Part E** - Objects inside objects
-- **Part F** - Applied challenge: Course manager
-- **Part G** - Stretch challenges
-
-## Lab 8 - Inheritance
-
-- **Part A** - Mutable default arguments
-- **Part B** - Dictionary or class?
-- **Part C** - Inheritance fundamentals
-- **Part D** - Inherited and subclass-specific behaviour
-- **Part E** - super() and shared initialization
-- **Part F** - Method overriding
-- **Part G** - Override and still use the base method
-- **Part H** - Applied challenge: User accounts
-
-## Lab 9 - Polymorphism and composition
-
-- **Part A** - Polymorphism
-- **Part B** - Polymorphism with inheritance
-- **Part C** - Duck typing
-- **Part D** - isinstance()
-- **Part E** - `__str__`
-- **Part F** - `__str__` with inheritance
-- **Part G** - Inheritance or composition?
-- **Part H** - Applied challenge: Export system
+    cd "Match Point Sports Centre"
+    python main.py
