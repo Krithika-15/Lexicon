@@ -56,26 +56,55 @@ def show_weather(city, weather):
     temp_units = current_units["temperature_2m"]
     wind = current["wind_speed_10m"]
     wind_units = current_units["wind_speed_10m"]
-    country = city["country"]
+    country = city.get("country", "Unknown")
     city_name = city["name"]
 
     print(f"{city_name}, {country}: {temperature}{temp_units}, wind {wind} {wind_units}")
 
 
-CACHE_FILE = "weather.json"
+# CACHE_FILE = "weather.json"
+# MAX_FILE_AGE = 600
+
+# if os.path.exists(CACHE_FILE) and time.time() - os.path.getmtime(CACHE_FILE) < MAX_FILE_AGE:
+#     print("(From cache)")
+#     with open(CACHE_FILE, encoding="utf-8") as f:
+#         data = json.load(f)
+#     show_weather(data["city"], data["weather"])
+# else:
+#     print("(From API)")
+#     # 3. Put it together
+#     user_input_city = input("Enter the city name : ")
+#     city = find_city(user_input_city)
+#     # pprint(city)
+#     if city is None:
+#         print("Sorry, Could not find that city")
+#     else:
+#         latitude = city["latitude"]
+#         longitude = city["longitude"]
+
+#         weather = get_weather(latitude, longitude, CURRENT_FIELDS)
+#         # pprint(weather)
+#         if weather is None:
+#             print("Sorry, Could not get the weather")
+#         else:
+#             show_weather(city, weather)
+#             data = {"city": city, "weather": weather}
+#             with open(CACHE_FILE, "w", encoding="utf-8") as f:
+#                 json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+user_input_city = input("Enter the city name : ")
+CACHE_FILE =f"{user_input_city}.json"
 MAX_FILE_AGE = 600
 
 if os.path.exists(CACHE_FILE) and time.time() - os.path.getmtime(CACHE_FILE) < MAX_FILE_AGE:
-    print("(From cache)")
+    print("From Cache")
     with open(CACHE_FILE, encoding="utf-8") as f:
         data = json.load(f)
     show_weather(data["city"], data["weather"])
 else:
-    print("(From API)")
-    # 3. Put it together
-    user_input_city = input("Enter the city name : ")
+    print("From API")
     city = find_city(user_input_city)
-    # pprint(city)
     if city is None:
         print("Sorry, Could not find that city")
     else:
@@ -83,7 +112,6 @@ else:
         longitude = city["longitude"]
 
         weather = get_weather(latitude, longitude, CURRENT_FIELDS)
-        # pprint(weather)
         if weather is None:
             print("Sorry, Could not get the weather")
         else:
@@ -91,6 +119,7 @@ else:
             data = {"city": city, "weather": weather}
             with open(CACHE_FILE, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
+
 
 
 
