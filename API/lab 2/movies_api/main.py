@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 
 from fastapi import Depends, Header, FastAPI, HTTPException
@@ -6,6 +7,7 @@ from pydantic import BaseModel
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
+MOVIES_FILE = "movies.json"
 
 def check_key(x_api_key: str | None = Header(default=None)):
     if not x_api_key or x_api_key != API_KEY:
@@ -16,13 +18,30 @@ app = FastAPI()
 
 # Part 1
 # 1 Start the server
-movies = [
+STARTING_MOVIES = [
     {"id": 1, "title": "Harry Potter and the Philosopher's Stone", "director": "Chris Columbus", "year": 2001},
     {"id": 2, "title": "The Avengers", "director": "Joss Whedon", "year": 2012},
     {"id": 3, "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe", "director": "Andrew Adamson", "year": 2005},
     {"id": 4, "title": "Wonder Woman", "director": "Patty Jenkins", "year": 2017},
 ]
 
+
+# Part 4 : 1 helper function
+def load_movies():
+    if os.path.exists(MOVIES_FILE):
+        with open(MOVIES_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+            return data
+    return STARTING_MOVIES
+
+# Part 4 : 1 helper function
+def save_movies():
+    with open(MOVIES_FILE, "w", encoding="utf-8") as f:
+        json.dump(movies, f, indent=2)
+
+
+# Part 4 : 1 helper function
+movies = load_movies()
 
 class Movie(BaseModel):
     title: str
@@ -103,6 +122,9 @@ def add_movie(movie: Movie):
     # adding new movie to the list
     movies.append(new_movie)
 
+    # write the updated list to movies.json # Part 4: 2
+    save_movies()
+
     # also return the new movie
     return new_movie
 
@@ -139,12 +161,16 @@ def replace_movie(movie_id: int, movie: Movie):
     existing["title"] = movie.title
     existing["director"] = movie.director
     existing["year"] = movie.year
+    # write the updated list to movies.json # Part 4: 2
+    save_movies()
     return existing
 
 @app.delete("/movies/{movie_id}", status_code=204, dependencies=[Depends(check_key)])
 def delete_movie(movie_id: int):
     existing = find_movie(movie_id)
     movies.remove(existing)
+    # write the updated list to movies.json # Part 4: 2
+    save_movies()
     return None
 
 # Test
@@ -166,6 +192,8 @@ def delete_movie(movie_id: int):
 def modify_movie(movie_id: int, changes: MovieUpdate):
     existing = find_movie(movie_id)
     existing.update(changes.model_dump(exclude_unset=True))
+    # write the updated list to movies.json
+    save_movies()
     return existing
 
 
@@ -194,4 +222,12 @@ def modify_movie(movie_id: int, changes: MovieUpdate):
 # PATCH changes only the fields the client sends, e.g. fixing just the year of a movie.
 
 
+# Part 4 : 3 Tested
+# works good
 
+
+# Part 4 : 4 Think
+# 1. If two people add a movie at the same time, both can get the same id, and one
+#    save can overwrite the other, so the first person's movie disappears silently.
+# 2. A database hands out each id only once and uses transactions and locks,
+#    so two writes at the same time can't overwrite each other.
