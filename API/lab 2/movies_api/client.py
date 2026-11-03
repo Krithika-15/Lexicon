@@ -30,6 +30,10 @@ print(response.status_code)
 print(response.json())
 
 
+response = requests.post(f"{BASE_URL}/movies", json=new_movie)
+print(response.status_code)
+print(response.json())
+
 
 # modify_movie = requests.patch(f"{BASE_URL}/movies/1", json={"year":2000}, timeout=5)
 # response = modify_movie.json()
