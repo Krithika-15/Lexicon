@@ -1,8 +1,20 @@
-from fastapi import FastAPI, HTTPException
+import os
+from dotenv import load_dotenv
+
+from fastapi import Depends, Header, FastAPI, HTTPException
 from pydantic import BaseModel
+
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+
+def check_key(x_api_key: str | None = Header(default=None)):
+    if not x_api_key or x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API key or missing API key")
+
 
 app = FastAPI()
 
+# Part 1
 # 1 Start the server
 movies = [
     {"id": 1, "title": "Harry Potter and the Philosopher's Stone", "director": "Chris Columbus", "year": 2001},
@@ -16,6 +28,13 @@ class Movie(BaseModel):
     title: str
     director: str
     year: int
+
+
+# Part 2 : 1 Model
+class MovieUpdate(BaseModel):
+    title: str | None = None
+    director: str | None = None
+    year: int | None = None
 
 
 def find_movie(movie_id: int):
@@ -65,7 +84,7 @@ def get_movies(director: str | None = None, year: int | None = None):
 
 
 # 4  Add a movie
-@app.post("/movies", status_code=201)
+@app.post("/movies", status_code=201, dependencies=[Depends(check_key)])
 def add_movie(movie: Movie):
     # find the biggest id
     biggest_id = 0
@@ -86,6 +105,7 @@ def add_movie(movie: Movie):
 
     # also return the new movie
     return new_movie
+
 
 # Test
 # In Swagger UI:
@@ -113,7 +133,7 @@ def add_movie(movie: Movie):
 
 
 # 5 replace and remove
-@app.put("/movies/{movie_id}")
+@app.put("/movies/{movie_id}", dependencies=[Depends(check_key)])
 def replace_movie(movie_id: int, movie: Movie):
     existing = find_movie(movie_id)
     existing["title"] = movie.title
@@ -121,7 +141,7 @@ def replace_movie(movie_id: int, movie: Movie):
     existing["year"] = movie.year
     return existing
 
-@app.delete("/movies/{movie_id}", status_code=204)
+@app.delete("/movies/{movie_id}", status_code=204, dependencies=[Depends(check_key)])
 def delete_movie(movie_id: int):
     existing = find_movie(movie_id)
     movies.remove(existing)
@@ -138,3 +158,40 @@ def delete_movie(movie_id: int):
 
 
 # 6 Call your own API from python
+
+
+
+# PART 2 : 1: route
+@app.patch("/movies/{movie_id}", dependencies=[Depends(check_key)])
+def modify_movie(movie_id: int, changes: MovieUpdate):
+    existing = find_movie(movie_id)
+    existing.update(changes.model_dump(exclude_unset=True))
+    return existing
+
+
+# Part 2 : 3 test the edges
+# Test
+# In Swagger UI:
+
+# PATCH /movies/1 with {"year": 2000}       => 200, only year changed
+# GET   /movies/1                            => 200, title and director unchanged, year 2000
+
+# PATCH /movies/1 with {}                    => 200, nothing changed
+#   model_dump(exclude_unset=True) gives {}, so update({}) changes nothing
+
+# PATCH /movies/1 with {"year": "abc"}       => 422 Unprocessable Content
+#   Pydantic checks against MovieUpdate before my function runs
+
+# PATCH /movies/99 with {"year": 2000}       => 404 Not Found
+#   find_movie raises it
+
+# Note: Swagger pre-fills every field with "string".
+# Need to Delete the fields that I don't want to change, or they get sent too.
+
+
+# part 2 : 4 Difference
+# PUT replaces the whole movie, so the client must send every field (title, director, year).
+# PATCH changes only the fields the client sends, e.g. fixing just the year of a movie.
+
+
+
