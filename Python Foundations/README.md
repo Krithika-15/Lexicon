@@ -16,6 +16,10 @@ My answers for the Python fundamentals part of the course. There is one folder p
 
 Most labs end with an "applied challenge" (a small program like a study tracker or a report builder) and some stretch exercises.
 
+## Foundations test
+
+[Foundations test](Foundations%20test/) has my answers to the Python foundations test from this part of the course.
+
 ## Final project
 
 [Match Point Sports Centre](Match%20Point%20Sports%20Centre/) is a command line booking system for a sports centre. You can register, log in, book tennis or padel courts, join yoga classes and cancel your bookings. More about it in the project's own README.
